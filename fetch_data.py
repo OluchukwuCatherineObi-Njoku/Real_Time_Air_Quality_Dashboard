@@ -49,7 +49,7 @@ def update_output(n_clicks, value):
                 f"Carbon Monoxide (CO): {data['data']['iaqi']['co']['v']}", html.Br(),
                 f"Nitrogen Dioxide (NO2): {data['data']['iaqi']['no2']['v']}", html.Br(),
                 f"Sulfur Dioxide (SO2): {data['data']['iaqi']['so2']['v']}", html.Br(), html.Br(),
-                f"DateTime: {data['data']['time']['s']}"
+                f"DateTime: {data['data']['time']['iso']}"
             ]
         else:
             return "Error fetching data: " + json.dumps(data['data'])
