@@ -1,3 +1,4 @@
+#improting the required libraries
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
@@ -6,12 +7,16 @@ import os
 from dotenv import load_dotenv
 import json
 
+# Load the .env file
 load_dotenv()
 
+# Create the app
 app = dash.Dash(__name__)
 
+# Set the layout of the dash app
 app.layout = html.Div([
     html.H1('Air Quality Index'), html.Br(),html.Br(),
+    html.H3('Air Quality Index Value Meanings: '), html.Br(),html.Br(),
 ] + [
     html.Div([
         html.Span(chunk), 
@@ -24,13 +29,14 @@ app.layout = html.Div([
     html.Div(id='output-container')
 ])
 
+# Set the callback function
 @app.callback(
     Output('output-container', 'children'),
     [Input('submit-button', 'n_clicks')],
     [dash.dependencies.State('location-input', 'value')]
 )
 
-
+# Define the callback function which updates the output container based on the input location
 def update_output(n_clicks, value):
     if n_clicks > 0:
         data = fetch_data(value)
@@ -48,6 +54,7 @@ def update_output(n_clicks, value):
         else:
             return "Error fetching data: " + json.dumps(data['data'])
 
+# Define the function to fetch data which takes location as an argument and returns the data related to the location
 def fetch_data(location):
     token = os.getenv('TOKEN')
     url = f"https://api.waqi.info/feed/{location}/?token={token}"
